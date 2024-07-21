@@ -268,6 +268,17 @@ async def process_action(action: Action):
         logger.warning("No callback found for action %s", action.name)
 
 
+@socket.on("window_message")
+async def window_message(sid, data):
+    """Handle a message send by the host window."""
+    session = WebsocketSession.require(sid)
+
+    init_ws_context(session)
+
+    if config.code.on_window_message:
+        await config.code.on_window_message(data)
+
+
 @socket.on("action_call")
 async def call_action(sid, action):
     """Handle an action call from the UI."""

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useApi } from '@chainlit/react-client';
+import { useApi, useChatInteract } from '@chainlit/react-client';
 
 import { apiClientState } from 'state/apiClient';
 import { IProjectSettings, projectSettingsState } from 'state/project';
@@ -18,6 +18,7 @@ export default function AppWrapper() {
   const { isAuthenticated, isReady } = useAuth();
 
   const { i18n } = useTranslation();
+  const { windowMessage } = useChatInteract();
 
   const languageInUse = navigator.language || 'en-US';
 
@@ -62,6 +63,14 @@ export default function AppWrapper() {
     if (!translations) return;
     handleChangeLanguage(translations.translation);
   }, [translations]);
+
+  useEffect(() => {
+    const handleWindowMessage = (event: MessageEvent) => {
+      windowMessage(event.data);
+    }
+    window.addEventListener('message', handleWindowMessage);
+    return () => window.removeEventListener('message', handleWindowMessage);
+  }, [windowMessage]);
 
   if (!isReady) {
     return null;

@@ -80,6 +80,13 @@ const useChatInteract = () => {
     [askUser]
   );
 
+  const windowMessage = useCallback(
+    (data: any) => {
+      session?.socket.emit('window_message', data);
+    },
+    [session?.socket]
+  );
+
   const updateChatSettings = useCallback(
     (values: object) => {
       session?.socket.emit('chat_settings_change', values);
@@ -135,6 +142,7 @@ const useChatInteract = () => {
     clear,
     replyMessage,
     sendMessage,
+    windowMessage,
     stopTask,
     setIdToResume,
     updateChatSettings
