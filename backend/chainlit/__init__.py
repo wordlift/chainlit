@@ -395,6 +395,8 @@ __all__ = [
     "on_stop",
     "action_callback",
     "author_rename",
+    "on_window_message",
+    "send_window_message",
     "on_settings_update",
     "password_auth_callback",
     "header_auth_callback",
