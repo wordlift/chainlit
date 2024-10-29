@@ -29,7 +29,7 @@ from ._utils import is_path_inside
 if TYPE_CHECKING:
     from chainlit.action import Action
     from chainlit.message import Message
-    from chainlit.types import InputAudioChunk, ChatProfile, Starter, ThreadDict
+    from chainlit.types import ChatProfile, InputAudioChunk, Starter, ThreadDict
     from chainlit.user import User
     from fastapi import Request, Response
 
@@ -272,9 +272,9 @@ class CodeSettings:
     password_auth_callback: Optional[
         Callable[[str, str], Awaitable[Optional["User"]]]
     ] = None
-    header_auth_callback: Optional[
-        Callable[[Headers], Awaitable[Optional["User"]]]
-    ] = None
+    header_auth_callback: Optional[Callable[[Headers], Awaitable[Optional["User"]]]] = (
+        None
+    )
     oauth_callback: Optional[
         Callable[[str, str, Dict[str, str], "User"], Awaitable[Optional["User"]]]
     ] = None
@@ -284,6 +284,7 @@ class CodeSettings:
     on_chat_end: Optional[Callable[[], Any]] = None
     on_chat_resume: Optional[Callable[["ThreadDict"], Any]] = None
     on_message: Optional[Callable[["Message"], Any]] = None
+    on_window_message: Optional[Callable[[str], Any]] = None
     on_audio_start: Optional[Callable[[], Any]] = None
     on_audio_chunk: Optional[Callable[["InputAudioChunk"], Any]] = None
     on_audio_end: Optional[Callable[[], Any]] = None
@@ -293,9 +294,9 @@ class CodeSettings:
     set_chat_profiles: Optional[
         Callable[[Optional["User"]], Awaitable[List["ChatProfile"]]]
     ] = None
-    set_starters: Optional[
-        Callable[[Optional["User"]], Awaitable[List["Starter"]]]
-    ] = None
+    set_starters: Optional[Callable[[Optional["User"]], Awaitable[List["Starter"]]]] = (
+        None
+    )
 
 
 @dataclass()

@@ -16,8 +16,8 @@ from chainlit.types import (
     FileDict,
     FileReference,
     MessagePayload,
+    OutputAudioChunk,
     ThreadDict,
-    OutputAudioChunk
 )
 from chainlit.user import PersistedUser
 from literalai.helper import utc_now
@@ -52,15 +52,15 @@ class BaseChainlitEmitter:
     async def send_element(self, element_dict: ElementDict):
         """Stub method to send an element to the UI."""
         pass
-    
+
     async def update_audio_connection(self, state: Literal["on", "off"]):
         """Audio connection signaling."""
         pass
-    
+
     async def send_audio_chunk(self, chunk: OutputAudioChunk):
         """Stub method to send an audio chunk to the UI."""
         pass
-        
+
     async def send_audio_interrupt(self):
         """Stub method to interrupt the current audio response."""
         pass
@@ -177,7 +177,7 @@ class ChainlitEmitter(BaseChainlitEmitter):
     async def send_audio_chunk(self, chunk: OutputAudioChunk):
         """Send an audio chunk to the UI."""
         await self.emit("audio_chunk", chunk)
-        
+
     async def send_audio_interrupt(self):
         """Method to interrupt the current audio response."""
         await self.emit("audio_interrupt", {})
@@ -268,6 +268,10 @@ class ChainlitEmitter(BaseChainlitEmitter):
             asyncio.create_task(send_elements())
 
         return message
+
+    def send_window_message(self, data: Any):
+        """Send custom data to the host window."""
+        return self.emit("window_message", data)
 
     async def send_ask_user(
         self, step_dict: StepDict, spec: AskSpec, raise_on_timeout=False
