@@ -14,7 +14,7 @@ import Readme from './readme';
 
 export default function ReadmeButton() {
   const { config } = useConfig();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   if (!config?.markdown) {
     return null;
