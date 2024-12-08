@@ -14,7 +14,19 @@ import Readme from './readme';
 
 export default function ReadmeButton() {
   const { config } = useConfig();
-  const [open, setOpen] = useState(true);
+
+  // Default the dialog to open
+  const defaultOpen = true;
+
+  // Check if the query parameter 'showReadme' is explicitly provided
+  const showReadmeParam = new URLSearchParams(window.location.search).get(
+    'readme'
+  );
+
+  // Determine the initial state of the dialog
+  const [open, setOpen] = useState(
+    showReadmeParam === 'true' || (showReadmeParam === null && defaultOpen)
+  );
 
   if (!config?.markdown) {
     return null;
