@@ -9,7 +9,6 @@ import { ElementSideView } from 'components/atoms/elements';
 import { Translator } from 'components/i18n';
 import { TaskList } from 'components/molecules/tasklist/TaskList';
 import { Header } from 'components/organisms/header';
-import { SideBar } from 'components/organisms/sidebar';
 
 import { userEnvState } from 'state/user';
 
@@ -47,7 +46,6 @@ const Page = ({ children }: Props) => {
         </Alert>
       ) : (
         <Stack direction="row" height="100%" width="100%">
-          <SideBar />
           <Stack flexGrow={1}>
             <Header />
             <Stack direction="row" flexGrow={1} overflow="auto">

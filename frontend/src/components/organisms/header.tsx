@@ -1,8 +1,6 @@
 import { memo } from 'react';
-import { useRecoilValue } from 'recoil';
 
 import { Box, Stack } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { useAudio } from '@chainlit/react-client';
 
@@ -11,16 +9,11 @@ import { Logo } from 'components/atoms/logo';
 import ChatProfiles from 'components/molecules/chatProfiles';
 import NewChatButton from 'components/molecules/newChatButton';
 
-import { settingsState } from 'state/settings';
-
 import AudioPresence from './chat/inputBox/AudioPresence';
-import { OpenSideBarMobileButton } from './sidebar/OpenSideBarMobileButton';
+import ReadmeButton from './readmeButton';
 
 const Header = memo(() => {
-  const isMobile = useMediaQuery('(max-width: 66rem)');
   const { audioConnection } = useAudio();
-  const { isChatHistoryOpen } = useRecoilValue(settingsState);
-
   return (
     <Box
       px={1}
@@ -57,13 +50,10 @@ const Header = memo(() => {
         ) : null}
         <ChatProfiles />
       </Box>
-      {isMobile ? (
-        <OpenSideBarMobileButton />
-      ) : isChatHistoryOpen ? null : (
-        <Logo style={{ maxHeight: '25px', marginLeft: '8px' }} />
-      )}
+      <Logo style={{ maxHeight: '25px', marginLeft: '8px' }} />
       <Box />
       <Stack direction="row" alignItems="center">
+        <ReadmeButton />
         <NewChatButton />
         <UserButton />
       </Stack>
