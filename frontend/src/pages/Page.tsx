@@ -17,7 +17,7 @@ type Props = {
 };
 
 const Page = ({ children }: Props) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isReady } = useAuth();
   const { config } = useConfig();
   const userEnv = useRecoilValue(userEnvState);
   const sideViewElement = useRecoilValue(sideViewState);
@@ -28,10 +28,11 @@ const Page = ({ children }: Props) => {
     }
   }
 
-  if (!isAuthenticated) {
+  if (isReady && !isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
+  // Question: isn't isAuthenticated unreachable here?
   return (
     <Box
       sx={{

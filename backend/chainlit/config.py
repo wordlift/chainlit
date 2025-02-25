@@ -95,6 +95,9 @@ auto_tag_thread = true
 # Allow users to edit their own messages
 edit_message = true
 
+# Use httponly cookie for client->server authentication, required to be able to use file upload and elements.
+cookie_auth = true
+
 # Authorize users to spontaneously upload files with messages
 [features.spontaneous_file_upload]
     enabled = true
@@ -311,6 +314,8 @@ class CodeSettings:
 @dataclass()
 class ProjectSettings(DataClassJsonMixin):
     allow_origins: List[str] = Field(default_factory=lambda: ["*"])
+    # Socket.io client transports option
+    transports: Optional[List[str]] = None
     enable_telemetry: bool = True
     # List of environment variables to be provided by each user to use the app. If empty, no environment variables will be asked to the user.
     user_env: Optional[List[str]] = None
@@ -325,6 +330,8 @@ class ProjectSettings(DataClassJsonMixin):
     cache: bool = False
     # Follow symlink for asset mount (see https://github.com/Chainlit/chainlit/issues/317)
     follow_symlink: bool = False
+    # Use httponly cookie for client->server authentication, required to be able to use file upload and elements.
+    cookie_auth: bool = True
 
 
 @dataclass()
